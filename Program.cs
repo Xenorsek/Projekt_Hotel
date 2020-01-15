@@ -21,7 +21,7 @@ namespace ConsoleApp50
         {
             public abstract double Koszt();
             public abstract string GetOpis();
-            //public abstract int NumerPokoju();
+            public abstract int NumerPokoju();
         }
          public class Pokoj : Room
         {
@@ -33,10 +33,10 @@ namespace ConsoleApp50
             {
                 return "Pokój";
             }
-            //public override int NumerPokoju()
-            //{
-            //    return 1;
-            //}
+            public override int NumerPokoju()
+            {
+                return 1;
+            }
         }
         //Dekorator pokoj
         public abstract class PokojDekorator : Room
@@ -54,6 +54,10 @@ namespace ConsoleApp50
             {
                 return room.Koszt();
             }
+            public override int NumerPokoju()
+            {
+                return room.NumerPokoju();
+            }
         }
         //dodac dla lozka dla dziecka, lozko krolewskie, wanna, mini bar, jacuzzi, czy dla zwierzat, taras, ilu osobowy
         class Lozeczko : PokojDekorator
@@ -70,7 +74,129 @@ namespace ConsoleApp50
             {
                 return room.GetOpis() + ", z łóżkiem dla dziecka";
             }
+            public override int NumerPokoju()
+            {
+                return room.NumerPokoju()+10;
+            }
         }
+        class Łoże : PokojDekorator
+        {
+            public Łoże(Room _room) : base(_room)
+            {
+
+            }
+            public override double Koszt()
+            {
+                return 150 + room.Koszt();
+            }
+            public override string GetOpis()
+            {
+                return room.GetOpis() + ", z łóżkiem królewskim";
+            }
+            public override int NumerPokoju()
+            {
+                return room.NumerPokoju()+5;
+            }
+        }
+        class Minibar : PokojDekorator
+        {
+            public Minibar(Room _room) : base(_room)
+            {
+
+            }
+            public override double Koszt()
+            {
+                return 50 + room.Koszt();
+            }
+            public override string GetOpis()
+            {
+                return room.GetOpis() + ", z minibarem";
+            }
+            public override int NumerPokoju()
+            {
+                return room.NumerPokoju() + 1;
+            }
+        }
+        class Wanna : PokojDekorator
+        {
+            public Wanna(Room _room) : base(_room)
+            {
+
+            }
+            public override double Koszt()
+            {
+                return 30 + room.Koszt();
+            }
+            public override string GetOpis()
+            {
+                return room.GetOpis() + ", z dużą wanną";
+            }
+            public override int NumerPokoju()
+            {
+                return room.NumerPokoju() + 2;
+            }
+        }
+        class Zwierzeta : PokojDekorator
+        {
+            public Zwierzeta(Room _room) : base(_room)
+            {
+
+            }
+            public override double Koszt()
+            {
+                return 100 + room.Koszt();
+            }
+            public override string GetOpis()
+            {
+                return room.GetOpis() + ", przeznaczony dla zwierząt";
+            }
+            public override int NumerPokoju()
+            {
+                return room.NumerPokoju() + 1;
+            }
+        }
+        class Osobowy : PokojDekorator
+        {
+            public int IloscOsob = 0;
+            public Osobowy(Room _room, int osoby) : base(_room)
+            {
+                this.IloscOsob = osoby;
+            }
+            public override double Koszt()
+            {
+                if (IloscOsob == 1)
+                    return 0 + room.Koszt();
+                else if (IloscOsob == 2)
+                    return 100 + room.Koszt();
+                else if (IloscOsob == 3)
+                    return 150 + room.Koszt();
+                else
+                    return 250 + room.Koszt();
+            }
+            public override string GetOpis()
+            {
+                if (IloscOsob == 1)
+                    return room.GetOpis() + ", Jednoosobowy";
+                else if (IloscOsob == 2)
+                    return room.GetOpis() + ", Dwuosobowy";
+                else if (IloscOsob == 3)
+                    return room.GetOpis() + ", Trzyosobowy";
+                else
+                    return room.GetOpis() + ", Czteroosobowy";
+            }
+            public override int NumerPokoju()
+            {
+                if (IloscOsob == 1)
+                    return room.NumerPokoju() + 0;
+                else if (IloscOsob == 2)
+                    return room.NumerPokoju() + 10;
+                else if (IloscOsob == 3)
+                    return room.NumerPokoju() + 20;
+                else
+                    return room.NumerPokoju() + 30;
+            }
+        }
+
         public class Osoba : Hotel
         {
             public string Imie;
