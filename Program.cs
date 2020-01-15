@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +8,8 @@ namespace ConsoleApp50
 {
     class Program
     {
-        
-         public class Hotel
+
+        public class Hotel
         {
             public Osoba Kierownik;
             public List<Room> pokoje;
@@ -23,11 +23,11 @@ namespace ConsoleApp50
             public abstract string GetOpis();
             //public abstract int NumerPokoju();
         }
-         public class Pokoj : Room
+        public class Pokoj : Room
         {
             public override double Koszt()
             {
-                    return 500.99;
+                return 500.99;
             }
             public override string GetOpis()
             {
@@ -96,27 +96,39 @@ namespace ConsoleApp50
             }
             public void PrzypiszDoPokoju(Pokoj pokoj)
             {
-                
+
             }
         }
         public class Pracownik : Osoba
         {
-            public double Wyplata;
+            public double Wyplata =2250;
             public bool Zmiana; // false dzien, true noc
             public int Ilosc_Godzin; // w ciagu tygodnia
             public double Staż; // zaleznie od dlugosci czasu wieksza wyplata
+            public string obowiązki;
         }
         public class Boj : Pracownik
+        {
+            
+
+        }
+        public class Sprzątaczka : Pracownik
         {
 
 
         }
-        class Restauracja : Hotel
+        public class Recepcjonista : Pracownik
+        {
+
+
+        }
+        public class Restauracja : Hotel
         {
 
         }
         static void Main(string[] args)
         {
+
         }
     }
 }
