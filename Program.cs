@@ -258,9 +258,9 @@ namespace Projekt
                 Aktualny_pokoj = pokoj;
                 pokoje.Add(pokoj);
                 if(KartaCzłonkowska == true)
-                    Rachunek = pokoj.Koszt() * 0.80;
+                    Rachunek = Rachunek + pokoj.Koszt() * 0.80;
                 else
-                Rachunek = pokoj.Koszt();
+                Rachunek = Rachunek + pokoj.Koszt();
                 Console.WriteLine("Numer pokoju: " + pokoj.NumerPokoju() + " Koszt: " + Rachunek);
             }
             public Room PokojDostepny(Room pokoj)
