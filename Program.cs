@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +13,7 @@ namespace Projekt
         {
             public Osoba Kierownik;
             public List<Room> pokoje = new List<Room>();
-            public List<Pracownik> Personel;
+            public List<Pracownik> Personel = new List<Pracownik>();
             public List<Gosc> Goscie;
 
         }
@@ -219,7 +219,7 @@ namespace Projekt
                 else
                     return room.NumerPokoju() + 30;
             }
-            
+
         }
         public class Osoba : Hotel
         {
@@ -240,27 +240,16 @@ namespace Projekt
                 this.Imie = imie;
                 this.Nazwisko = nazwisko;
             }
-            public void ZostanCzlonkiem()
-            {
-                Console.WriteLine("Czy akceptujesz zasady RODO ? Y/N");
-                char RODO = Convert.ToChar(Console.ReadLine());
-                Console.WriteLine("Czy akceptujesz zasady regulaminu ? Y/N");
-                char Regulamin = Convert.ToChar(Console.ReadLine());
-                if ((RODO == 'Y' || RODO == 'y') && (Regulamin == 'Y' || Regulamin == 'y'))
-                {
-                    this.KartaCzłonkowska = true;
-                    Console.WriteLine("Zostałeś członkiem klubu");
-                }
-            }
+            
             public void PrzypiszDoPokoju(Room pokoj)
             {
                 pokoj = PokojDostepny(pokoj);
                 Aktualny_pokoj = pokoj;
                 pokoje.Add(pokoj);
-                if(KartaCzłonkowska == true)
+                if (KartaCzłonkowska == true)
                     Rachunek = Rachunek + pokoj.Koszt() * 0.80;
                 else
-                Rachunek = Rachunek + pokoj.Koszt();
+                    Rachunek = Rachunek + pokoj.Koszt();
                 Console.WriteLine("Numer pokoju: " + pokoj.NumerPokoju() + " Koszt: " + Rachunek);
             }
             public Room PokojDostepny(Room pokoj)
@@ -380,12 +369,12 @@ namespace Projekt
         {
 
         }
-    
-    static void Main(string[] args)
-    {
-        Boj jeden = new Boj("Andrzej", false, 12, "Dudeł");
-        Sprzątaczka dwa = new Sprzątaczka("Wiesia", false, 2, "Mozambik");
-        Recepcjonista trzy = new Recepcjonista("Mystosław", true, 18, "Bajkiewicz");
+
+        static void Main(string[] args)
+        {
+            Boj jeden = new Boj("Andrzej", false, 12, "Dudeł");
+            Sprzątaczka dwa = new Sprzątaczka("Wiesia", false, 2, "Mozambik");
+            Recepcjonista trzy = new Recepcjonista("Mystosław", true, 18, "Bajkiewicz");
             //trzy.Info(); //Informacje o pracowniku
             Room room = new Pokoj();
             room = new Zwierzeta(room);
@@ -394,11 +383,123 @@ namespace Projekt
             room2 = new Zwierzeta(room2);
             room2 = new Osobowy(room2, 3);
             Gosc osoba = new Gosc(true, "Marcin", "Kozlowski");
-            osoba.PrzypiszDoPokoju(room);
-            osoba.PrzypiszDoPokoju(room2);
-            Console.WriteLine(osoba.Rachunek);
-        Console.ReadKey();
+            //osoba.PrzypiszDoPokoju(room);
+            //osoba.PrzypiszDoPokoju(room2);
+            //Console.WriteLine(osoba.Rachunek);
+            Symulacja();
+            Console.ReadKey();
+            void Symulacja()
+            {
+                Console.WriteLine("      Witamy w naszym chotelu!\n\n\n");
+                bool exit = false;
+                do
+                {
+                    Console.WriteLine("Co Chcesz Zrobić? \n");
+                    Console.WriteLine("Zatrudnij Pracownika - zatrudnij");
+                    Console.WriteLine("Weź Pokój - pokoj");
+                    Console.WriteLine("Poproś o rachunek - rachunek");
+                    Console.WriteLine("Wyjście  - exit");
+                    string wynik = Console.ReadLine();
+                    if (wynik == "exit")
+                    {
+                        exit = true;
+                    }
+                    if(wynik== "zatrudnij")
+                    {
+                        string zat;
+                        do
+                        {
+                            Console.WriteLine("\n\n\n\n Zatrudnij boja - boj \n Zatrudnij sprzątaczkę - sprzataczka \n Zatrudnij Recepcjoniste - recepcjonista \n Wróć - back");
+                            zat = Console.ReadLine();
+                            if(zat == "boj")
+                            {
+                                string imie, nazwisko,zmiana;
+                                bool zmian =false;
+                                Console.WriteLine("\n Podaj Imię Pracownika: ");
+                                imie = Console.ReadLine();
+                                Console.WriteLine("\n Podaj Nazwisko Pracownika: ");
+                                nazwisko = Console.ReadLine();
+                                Console.WriteLine("\n Zmiana dzienna - d czy nocna - n ?");
+                                zmiana = Console.ReadLine();
+                                if (zmiana == "d")
+                                    zmian = false;
+                                if (zmiana == "n")
+                                    zmian = true;
+                                _= new Boj(imie, zmian, 0, nazwisko);
+
+                            }
+                            if(zat == "sprzataczka")
+                            {
+                                string imie, nazwisko, zmiana;
+                                bool zmian = false;
+                                Console.WriteLine("\n Podaj Imię Pracownika: ");
+                                imie = Console.ReadLine();
+                                Console.WriteLine("\n Podaj Nazwisko Pracownika: ");
+                                nazwisko = Console.ReadLine();
+                                Console.WriteLine("\n Zmiana dzienna - d czy nocna - n ?");
+                                zmiana = Console.ReadLine();
+                                if (zmiana == "d")
+                                    zmian = false;
+                                if (zmiana == "n")
+                                    zmian = true;
+                                _ = new Sprzątaczka(imie, zmian, 0, nazwisko);
+                            }
+                            if (zat == "recepcjonista")
+                            {
+                                string imie, nazwisko, zmiana;
+                                bool zmian = false;
+                                Console.WriteLine("\n Podaj Imię Pracownika: ");
+                                imie = Console.ReadLine();
+                                Console.WriteLine("\n Podaj Nazwisko Pracownika: ");
+                                nazwisko = Console.ReadLine();
+                                Console.WriteLine("\n Zmiana dzienna - d czy nocna - n ?");
+                                zmiana = Console.ReadLine();
+                                if (zmiana == "d")
+                                    zmian = false;
+                                if (zmiana == "n")
+                                    zmian = true;
+                                _ = new Recepcjonista(imie, zmian, 0, nazwisko);
+                            }
+                        } while (zat != "back");
+                    }
+                    if(wynik == "pokoj")
+                    {
+                        string imie, nazwisko,kart;
+                        bool karta=false;
+                        Console.WriteLine("\n\n\n Poproszę podać Imię: ");
+                        imie = Console.ReadLine();
+                        Console.WriteLine("\n Nazwisko: ");
+                        nazwisko = Console.ReadLine();
+                        Console.WriteLine("\n Czy Posiada pan kartę członkowską? - y/n");
+                        kart = Console.ReadLine();
+                        if(kart == "y")
+                        {
+                            karta = true;
+                        }
+                        if(kart == "n")
+                        {
+                            string t;
+                            Console.WriteLine("\n Czy chciał by pan/pani wyrobić kartę członkowską? Upoważnia ona do zniżki - y/n");
+                            t = Console.ReadLine();
+                            if (t == "y")
+                            {
+                                Console.WriteLine("\n Czy akceptujesz zasady RODO ? Y/N");
+                                char RODO = Convert.ToChar(Console.ReadLine());
+                                Console.WriteLine("\n Czy akceptujesz zasady regulaminu ? Y/N");
+                                char Regulamin = Convert.ToChar(Console.ReadLine());
+                                if ((RODO == 'Y' || RODO == 'y') && (Regulamin == 'Y' || Regulamin == 'y'))
+                                {
+                                    karta = true;
+                                    Console.WriteLine("\n Zostałeś członkiem klubu");
+                                }
+                            }
+                        }
+                        _ = new Gosc(karta, imie, nazwisko);
+                    }
+
+                } while (exit!=true);
+
+            }
+        }
     }
-    //Trzeba zrobić jakiś scenariusz może w mainie porobić cmd symulacji typu zapisz gościa, zatrudnij pracownika, Poproś o rachunek, płatność w ratach xd
-}
 }
