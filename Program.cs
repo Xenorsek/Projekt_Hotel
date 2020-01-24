@@ -11,13 +11,17 @@ namespace Projekt
 
         public class Hotel
         {
-            public Osoba Kierownik;
+            //public Osoba Kierownik = new Osoba("Admin","Admin");
             public List<Room> pokoje = new List<Room>();
             public List<Pracownik> Personel = new List<Pracownik>();
             public List<Gosc> Goscie = new List<Gosc>();
             public void DodajGoscia(Gosc g)
             {
                 Goscie.Add(g);
+            }
+            public void DodajPracownika(Pracownik p)
+            {
+                Personel.Add(p);
             }
         }
         public abstract class Room : Hotel
@@ -243,7 +247,7 @@ namespace Projekt
                 this.IloscOdwiedzin = this.IloscOdwiedzin + 1;
                 this.Imie = imie;
                 this.Nazwisko = nazwisko;
-                this.Id =Goscie.Count+1;
+                this.Id = Goscie.Count + 1;
             }
             public void PrzypiszDoPokoju(Room pokoj)
             {
@@ -378,8 +382,11 @@ namespace Projekt
         {
             Hotel hotel = new Hotel();
             Boj jeden = new Boj("Andrzej", false, 12, "Dudeł");
+            hotel.Personel.Add(jeden);
             Sprzątaczka dwa = new Sprzątaczka("Wiesia", false, 2, "Mozambik");
+            hotel.Personel.Add(dwa);
             Recepcjonista trzy = new Recepcjonista("Mystosław", true, 18, "Bajkiewicz");
+            hotel.Personel.Add(trzy);
             //trzy.Info(); //Informacje o pracowniku
             Room room = new Pokoj();
             room = new Zwierzeta(room);
@@ -387,7 +394,7 @@ namespace Projekt
             Room room2 = new Pokoj();
             room2 = new Zwierzeta(room2);
             room2 = new Osobowy(room2, 3);
-            Gosc Pan_Kierownik = new Gosc(true, "Marcin", "Kozlowski");
+            //Gosc Pan_Kierownik = new Gosc(true, "Marcin", "Kozlowski");
             //osoba.PrzypiszDoPokoju(room);
             //osoba.PrzypiszDoPokoju(room2);
             //Console.WriteLine(osoba.Rachunek);
@@ -398,14 +405,46 @@ namespace Projekt
             {
                 Console.WriteLine("      Witamy w naszym upośledzonym hotelu!\n\n\n");
                 bool exit = false;
+                bool admin = false;
+                do
+                {
+                    Console.WriteLine("Zaloguj jako admin - 1");
+                    Console.WriteLine("Zaloguj jako gość - 2");
+                    string wynik = Console.ReadLine();
+                    if (wynik == "1")
+                    {
+                        Console.WriteLine("Podaj Login: ");
+                        string login = Console.ReadLine();
+                        Console.WriteLine("Podaj hasło: ");
+                        string hasło = Console.ReadLine();
+                        if (login == hasło)
+                        {
+                            if(login=="admin")
+                            {
+                                admin = true;
+                                exit = true;
+                            }
+                        }
+                    }
+                    if(wynik=="2")
+                    {
+                        exit = true;
+                    }
+                } while (exit != true);
+                exit = false;
                 do
                 {
                     Console.WriteLine("Co Chcesz Zrobić? \n");
                     Console.WriteLine("Zatrudnij Pracownika - zatrudnij");
                     Console.WriteLine("Weź Pokój - pokoj");
                     Console.WriteLine("Poproś o rachunek - rachunek");
+                    
+                    if (admin == true)
+                    {
+                        Console.WriteLine("Wypisz liste gości - goscie");
+                        Console.WriteLine("Wypisz liste pracowników - pracownicy");
+                    }
                     Console.WriteLine("Wyjście  - exit");
-                    //if(login == "kierownik" && haslo == " Da Pan 5")
                     string wynik = Console.ReadLine();
                     if (wynik == "exit")
                     {
@@ -432,7 +471,9 @@ namespace Projekt
                                     zmian = false;
                                 if (zmiana == "n")
                                     zmian = true;
-                                _ = new Boj(imie, zmian, 0, nazwisko);
+                                var a = new Boj(imie, zmian, 0, nazwisko);
+                                hotel.DodajPracownika(a);
+                                Console.WriteLine("\n Zatrudniono pracownika \n");
 
                             }
                             if (zat == "sprzataczka")
@@ -449,7 +490,9 @@ namespace Projekt
                                     zmian = false;
                                 if (zmiana == "n")
                                     zmian = true;
-                                _ = new Sprzątaczka(imie, zmian, 0, nazwisko);
+                                var a = new Sprzątaczka(imie, zmian, 0, nazwisko);
+                                hotel.DodajPracownika(a);
+                                Console.WriteLine("\n Zatrudniono pracownika \n");
                             }
                             if (zat == "recepcjonista")
                             {
@@ -465,7 +508,9 @@ namespace Projekt
                                     zmian = false;
                                 if (zmiana == "n")
                                     zmian = true;
-                                _ = new Recepcjonista(imie, zmian, 0, nazwisko);
+                                var a = new Recepcjonista(imie, zmian, 0, nazwisko);
+                                hotel.DodajPracownika(a);
+                                Console.WriteLine("\n Zatrudniono pracownika \n");
                             }
                         } while (zat != "back");
                     }
@@ -511,40 +556,40 @@ namespace Projekt
                         Room room1 = new Pokoj();
                         while (Wykonuj)
                         {
-                            
+
                             Console.WriteLine("Czy chcesz mieć w tym pokoju : Łużeczko dla dzieci ('l'), Łoże Królewskie('ł'), Minibar'(m'), Wanna('w'), Zwierzeta('z'). Koniec('0') ");
                             Czytaj_znak = Convert.ToChar(Console.ReadLine());
-                            if(Czytaj_znak == 'l')
+                            if (Czytaj_znak == 'l')
                             {
                                 room1 = new Lozeczko(room1);
                                 Console.WriteLine(room1.GetOpis());
                                 pomoc++;
                             }
-                            else if(Czytaj_znak == 'ł')
+                            else if (Czytaj_znak == 'ł')
                             {
                                 room1 = new Łoże(room1);
                                 Console.WriteLine(room1.GetOpis());
                                 pomoc++;
                             }
-                            else if(Czytaj_znak == 'm')
+                            else if (Czytaj_znak == 'm')
                             {
                                 room1 = new Minibar(room1);
                                 Console.WriteLine(room1.GetOpis());
                                 pomoc++;
                             }
-                            else if(Czytaj_znak == 'w')
+                            else if (Czytaj_znak == 'w')
                             {
                                 room1 = new Wanna(room1);
                                 Console.WriteLine(room1.GetOpis());
                                 pomoc++;
                             }
-                            else if(Czytaj_znak == 'z')
+                            else if (Czytaj_znak == 'z')
                             {
                                 room1 = new Zwierzeta(room1);
                                 Console.WriteLine(room1.GetOpis());
                                 pomoc++;
                             }
-                            else if(Czytaj_znak == '0')
+                            else if (Czytaj_znak == '0')
                             {
                                 Wykonuj = false;
                             }
@@ -552,7 +597,7 @@ namespace Projekt
                             {
                                 Console.WriteLine("Podałeś zły znak. Spróbuj ponownie");
                             }
-                            if(pomoc == 5)
+                            if (pomoc == 5)
                             {
                                 Wykonuj = false;
                             }
@@ -562,29 +607,77 @@ namespace Projekt
                         iloscpokojow = int.Parse(Console.ReadLine());
                         room1 = new Osobowy(room1, iloscpokojow);
                         osoba1.PrzypiszDoPokoju(room1);
-                        Console.WriteLine(" "+room1.GetOpis()+" Numer pokoju to : " + room1.NumerPokoju());
-                        
+                        Console.WriteLine(" " + room1.GetOpis() + " Numer pokoju to : " + room1.NumerPokoju());
+
                     }
-                    if(wynik == "rachunek")
+                    if (wynik == "rachunek")
                     {
-                        Gosc osoba = new Gosc(true,"a","b");
+                        Gosc osoba = new Gosc(true, "a", "b");
                         Console.WriteLine("Podaj swoje id by opłacić rachunek");
                         int numerek = int.Parse(Console.ReadLine());
-                        for(int i = 0; i< hotel.Goscie.Count; i++)
+                        for (int i = 0; i < hotel.Goscie.Count; i++)
                         {
-                            if(numerek == hotel.Goscie[i].Id)
+                            if (numerek == hotel.Goscie[i].Id)
                             {
                                 osoba = hotel.Goscie[i];
                             }
-                            
+
                         }
-                        Console.WriteLine(" "+ osoba.Rachunek);
+                        Console.WriteLine(" " + osoba.Rachunek);
+                        Console.WriteLine("Płatność Kartą czy gotówką? - karta/gotowka");
+                        string a = Console.ReadLine();
+                        if(a=="gotowka")
+                        {
+                            Console.WriteLine("\n\nDziękujemy za skorzystanie z naszego hotelu");
+                        }
+                        if(a=="karta")
+                        {
+                            Console.WriteLine("Czy drukować fakturę? - y/n");
+                            var fak =Console.ReadLine();
+                            if(fak == "y")
+                            {
+                                Console.WriteLine("\n Proszę o to faktura, Dziękujemy za skorzystanie z naszego hotelu");
+                            }
+                            if(fak=="n")
+                            {
+                                Console.WriteLine("Dziękujemy za skorzystanie z naszego hotelu");
+                            }
+                        }
+                    }
+                    if(wynik == "goscie")
+                    {
+                        var goscie = hotel.Goscie;
+                        for (int i = 0; i < goscie.Count; i++)
+                        {
+                            Console.WriteLine("Id: "+ goscie[i].Id + " Imie: " + goscie[i].Imie + " Nazwisko: " + goscie[i].Nazwisko + " Karta Członkowska: " + goscie[i].KartaCzłonkowska + " Ilosc Odwiedzin: " + goscie[i].IloscOdwiedzin);
+                        }
+                    }
+                    if (wynik == "pracownicy")
+                    {
+                        var prac = hotel.Personel;
+                        for (int i = 0; i < prac.Count; i++)
+                        {
+                            Console.WriteLine("Id: " + i + " Imie: " + prac[i].Imie + " Nazwisko: " + prac[i].Nazwisko + " Ilosc Godzin: " + prac[i].Ilosc_Godzin + " Obowiązki:  " + prac[i].obowiązki);
+                        }
+                        Console.WriteLine("\n\n Czy chcesz zwonić pracownika? - y/n");
+                        string zw = Console.ReadLine();
+                        if(zw=="y")
+                        {
+                            Console.WriteLine("Podaj id pracownika: ");
+                            string a = Console.ReadLine();
+                            int b = Convert.ToInt32(a);
+                            for (int i = 0; i < prac.Count; i++)
+                            {
+                                if(i==b)
+                                {
+                                    hotel.Personel.Remove(prac[i]);
+                                }
+                            }
+                        }
                     }
                 } while (exit != true);
 
             }
-                // Zwolnij pracownika, Wypisz pracownikow, gosci. Kierownik ma opcje ukryte dla sprawdzenia i zwolnienia pracownikow.
-                //urozmaicić rachunek bo jednak do zaplaty nie dochodzi
         }
     }
 }
