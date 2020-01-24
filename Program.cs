@@ -247,7 +247,7 @@ namespace Projekt
                 this.IloscOdwiedzin = this.IloscOdwiedzin + 1;
                 this.Imie = imie;
                 this.Nazwisko = nazwisko;
-                this.Id = Goscie.Count + 1;
+                this.Id = 1;
             }
             public void PrzypiszDoPokoju(Room pokoj)
             {
@@ -419,14 +419,14 @@ namespace Projekt
                         string hasło = Console.ReadLine();
                         if (login == hasło)
                         {
-                            if(login=="admin")
+                            if (login == "admin")
                             {
                                 admin = true;
                                 exit = true;
                             }
                         }
                     }
-                    if(wynik=="2")
+                    if (wynik == "2")
                     {
                         exit = true;
                     }
@@ -438,7 +438,7 @@ namespace Projekt
                     Console.WriteLine("Zatrudnij Pracownika - zatrudnij");
                     Console.WriteLine("Weź Pokój - pokoj");
                     Console.WriteLine("Poproś o rachunek - rachunek");
-                    
+
                     if (admin == true)
                     {
                         Console.WriteLine("Wypisz liste gości - goscie");
@@ -548,6 +548,7 @@ namespace Projekt
                         }
                         Gosc osoba1 = new Gosc(karta, imie, nazwisko);
                         hotel.DodajGoscia(osoba1);
+                        osoba1.Id = hotel.Goscie.Count;
                         Console.WriteLine("Twoje id To : " + osoba1.Id + " Zapamietaj! ");
                         bool Wykonuj = true;
                         char Czytaj_znak;
@@ -626,30 +627,30 @@ namespace Projekt
                         Console.WriteLine(" " + osoba.Rachunek);
                         Console.WriteLine("Płatność Kartą czy gotówką? - karta/gotowka");
                         string a = Console.ReadLine();
-                        if(a=="gotowka")
+                        if (a == "gotowka")
                         {
                             Console.WriteLine("\n\nDziękujemy za skorzystanie z naszego hotelu");
                         }
-                        if(a=="karta")
+                        if (a == "karta")
                         {
                             Console.WriteLine("Czy drukować fakturę? - y/n");
-                            var fak =Console.ReadLine();
-                            if(fak == "y")
+                            var fak = Console.ReadLine();
+                            if (fak == "y")
                             {
                                 Console.WriteLine("\n Proszę o to faktura, Dziękujemy za skorzystanie z naszego hotelu");
                             }
-                            if(fak=="n")
+                            if (fak == "n")
                             {
                                 Console.WriteLine("Dziękujemy za skorzystanie z naszego hotelu");
                             }
                         }
                     }
-                    if(wynik == "goscie")
+                    if (wynik == "goscie")
                     {
                         var goscie = hotel.Goscie;
                         for (int i = 0; i < goscie.Count; i++)
                         {
-                            Console.WriteLine("Id: "+ goscie[i].Id + " Imie: " + goscie[i].Imie + " Nazwisko: " + goscie[i].Nazwisko + " Karta Członkowska: " + goscie[i].KartaCzłonkowska + " Ilosc Odwiedzin: " + goscie[i].IloscOdwiedzin);
+                            Console.WriteLine("Id: " + goscie[i].Id + " Imie: " + goscie[i].Imie + " Nazwisko: " + goscie[i].Nazwisko + " Karta Członkowska: " + goscie[i].KartaCzłonkowska + " Ilosc Odwiedzin: " + goscie[i].IloscOdwiedzin);
                         }
                     }
                     if (wynik == "pracownicy")
@@ -661,14 +662,14 @@ namespace Projekt
                         }
                         Console.WriteLine("\n\n Czy chcesz zwonić pracownika? - y/n");
                         string zw = Console.ReadLine();
-                        if(zw=="y")
+                        if (zw == "y")
                         {
                             Console.WriteLine("Podaj id pracownika: ");
                             string a = Console.ReadLine();
                             int b = Convert.ToInt32(a);
                             for (int i = 0; i < prac.Count; i++)
                             {
-                                if(i==b)
+                                if (i == b)
                                 {
                                     hotel.Personel.Remove(prac[i]);
                                 }
