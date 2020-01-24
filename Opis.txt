@@ -1,0 +1,12 @@
+Projekt tworzy symulację hotelu.
+Posiada Menu w którym można:
+-Zatrudniać pracowników
+-Tworzyć gości i brać pokoje
+-Wyświetlać listę gości
+-Wyświetlać listę pracowników oraz ich zwalniać
+-Wyświetlać rachunek danego klienta
+-Dodatkowe opcje ukryte przy logowaniu jako admin(Login: admin Hasło: admin)
+
+Autorzy Projektu
+Przemysław Krajewski
+Marcin Kozłowski
